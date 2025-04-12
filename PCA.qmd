@@ -6,6 +6,8 @@ Integrantes: Aguilar Trauco Smith Emanuel
              
 Journal: The relationship between leaf area growth and biomass accumulation in Arabidopsis thaliana             
 DOI: https://doi.org/10.3389/fpls.2015.00167
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r}
@@ -52,7 +54,9 @@ library(textshape)
 library(stats)
 library(ggplot2)
 
-
+library(readxl)
+Arab <- read_excel("Arab.xlsx")
+View(Arab)
 Arab<-textshape::column_to_rownames(Arab, loc = 1)
 df<-as.data.frame(Arab)
 df <- df[, apply(df, 2, function(x) var(x, na.rm = TRUE) != 0)]
@@ -77,8 +81,6 @@ xx<-REArab$x
 xx<-as.data.frame(xx)
 Arab$PC1<-xx$PC1
 Arab$PC2<-xx$PC2
-head(Arabcor)
-cor(Arabcor)
 
 REArab2 <- princomp(df , cor = TRUE)
 names(REArab2)
