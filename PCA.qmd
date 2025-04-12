@@ -1,0 +1,191 @@
+---
+title: "PCA"
+Integrantes: Aguilar Trauco Smith Emanuel
+             Arista Vargas Diana Liseth
+             Quispe Aguilar Elder Antonio
+             
+Journal: The relationship between leaf area growth and biomass accumulation in Arabidopsis thaliana             
+DOI: https://doi.org/10.3389/fpls.2015.00167
+---
+
+```{r}
+stall.packages("openxlsx")
+install.packages("normtest")
+install.packages("nortest")
+install.packages("modeest")
+install.packages("statip")
+install.packages("PMCMR")
+install.packages("PMCMRplus")
+install.packages("MASS")
+install.packages("moments")
+install.packages("car")
+install.packages("psych")
+install.packages("vegan")
+install.packages("corrplot")
+install.packages("cluster")
+install.packages("pgirmess")
+install.packages("MVN")
+install.packages("readxl")
+install.packages("Rcpp")
+install.packages("textshape")
+install.packages("stats")
+install.packages("biplot")
+
+library(openxlsx)
+library(normtest)
+library(nortest)
+library(modeest)
+library(statip)
+library(PMCMR)
+library(PMCMRplus)
+library(MASS)
+library(moments)
+library(car)
+library(psych)
+library(vegan)
+library(corrplot)
+library(cluster)
+library(pgirmess)
+library(MVN)
+library(Rcpp)
+library(textshape)
+library(stats)
+library(ggplot2)
+
+
+Arab<-textshape::column_to_rownames(Arab, loc = 1)
+df<-as.data.frame(Arab)
+df <- df[, apply(df, 2, function(x) var(x, na.rm = TRUE) != 0)]
+REArab<-prcomp(df, scale = TRUE)
+names(REArab)
+REArab<-prcomp(df, scale = TRUE)
+names(REArab)
+
+head(REArab$rotation)[, 1:15]
+dim(REArab$roattion)
+
+head(Arab$x)[,1:15]
+
+REArab$sdev
+
+REArab$sdev^2
+
+summary(REArab)
+
+# COMPONENTE 1
+xx<-REArab$x
+xx<-as.data.frame(xx)
+Arab$PC1<-xx$PC1
+Arab$PC2<-xx$PC2
+head(Arabcor)
+cor(Arabcor)
+
+REArab2 <- princomp(df , cor = TRUE)
+names(REArab2)
+REArab2$sdev
+suArabry (REArab2)
+#PCA  DETALLADOS######
+install.packages("FactoMineR", ask = FALSE)
+install.packages("FactoMineR")
+library(FactoMineR)
+REArab3 <- PCA(X = df, scale.unit = TRUE, ncp = 15, graph = TRUE)
+print(REArab3)
+head(REArab3$eig)
+head(REArab3$var)
+
+library(factoextra)
+
+get_pca(REArab3)
+get_pca_var(REArab3)
+get_pca_ind(REArab3)
+#VISUALIZACIÓN#
+#visualizar 
+fviz_eig(REArab3)
+fviz_eig(REArab3)
+
+#visualizar 
+fviz_screeplot(REArab3)
+fviz_screeplot(REArab3)
+
+#Componentes principales.
+fviz_pca_ind(REArab3)
+fviz_pca_ind(REArab3)
+
+#En colores#
+fviz_pca_ind(REArab3,
+             col.ind = "cos2", # Color by the quality of representation
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE    # Avoid text overlapping
+)
+fviz_pca_ind(REArab3,
+             col.ind = "cos2", # Color by the quality of representation
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE    # Avoid text overlapping
+)
+fviz_pca_ind(REArab3,
+             col.ind = "cos2", # Color by the quality of representation
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+fviz_pca_ind(REArab3,
+             col.ind = "cos2", # Color by the quality of representation
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+#Representación de variables sobre componentes principales###############
+fviz_pca_var(REArab3)
+fviz_pca_var(REArab3)
+fviz_pca_var(REArab3, repel = TRUE)
+
+fviz_pca_var(REArab3, repel = TRUE)
+
+############CONTRIBUCIÓN#################
+fviz_pca_var(REArab3,
+             col.var = "contrib", # Color by contributions to the PC
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+fviz_pca_var(REArab3,
+             col.var = "contrib", # Color by contributions to the PC
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+
+fviz_pca_var(REArab3, col.var = "cos2", 
+             geom.var = "arrow", 
+             labelsize = 2, 
+             repel = FALSE)
+
+
+#Representa la contribuci?n de filas/columnas de los resultados de un pca.
+fviz_contrib(REArab3,choice = "var")
+fviz_contrib(REArab3,choice = "var", axes = 2)
+
+fviz_contrib(REArab3,choice = "ind")
+fviz_contrib(REArab3,choice = "ind", axes = 2)
+
+###########UNION DE AMBOS#######################
+biplot(REArab3, scale = 0, cex = 0.6, col = c("blue4", "brown3"))
+fviz_pca_biplot(REArab3, repel = TRUE,
+                col.var = "#2E9FDF", # Variables color
+                col.ind = "#FC4E07"  # Individuals color
+)
+
+fviz_pca_biplot(REArab3, repel = TRUE,
+                #geom= "point", #o text o geom=c("point", "text")
+                col.var = "#2E9FDF", # Variables color
+                col.ind = "#FC4E07", # Individuals color
+                select.ind = list(contrib = 30)
+)
+
+fviz_pca_biplot(REArab3, repel = TRUE,
+                #geom= "point", #o text o geom=c("point", "text")
+                col.var = "#2E9FDF", # Variables color
+                col.ind = "#FC4E07", # Individuals color
+                select.ind = list(contrib = 30)
+)
+```
+
+```{r}
+
+```
